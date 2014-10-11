@@ -40,28 +40,33 @@ class apiController {
 
     /**
      * Function to handle data insert into Redis creating ip country pairs parsing csv file ranges.
-     * Set could be done using phpredis but it takes too long and dev env seems not able to handle it
-     * Instead, procedure creating file and importing it using redis-cli will be used. That's why code to insert
-     * is commented.
+     * Standalone script to create SET commands to be used in Redis-CLI is present in Setup/queries.php
+     * since phpredis takes too long to do such bulk insert.
+     *
+     * For every range, a IP, Country set is being generated
+     * FI. Register 1959248384	1959249919	INDONESIA from csv file will create..
+     * SET 1959248384 'INDONESIA'
+     * SET 1959248385 'INDONESIA'
+     * SET 1959248386 'INDONESIA'
+     * ...
+     * SET 1959249919 'INDONESIA'
      *
      * @param $file
      */
     private function loadContent ($file) {
-        //$Db = new Ip();
+        $Db = new Ip();
         $file = fopen(SETUPPATH . $file,"r");
-        $fileToWrite = fopen(SETUPPATH . 'queries.txt',"w");
 
         while (($data = fgetcsv($file, 1000, ",")) !== FALSE) {
             $keys = 0;
             for ($i = $data[0]; $i <= $data[1]; $i++ ) {
-                /*try {
+                try {
                     $Db->setIpCountry($i, $data[3]);
                     $keys++;
-                    sleep(0.1);
                 } catch (Exception $e) {
                     echo $e->getMessage();
-                }*/
-                fwrite($fileToWrite, "SET $i '$data[3]'\n");
+                }
+
             }
         }
         fclose($file);

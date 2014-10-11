@@ -4,6 +4,7 @@
 /**
  * Class Adapter
  * It setups Redis connection. All models that need to use it will extend it.
+ * Requires redis.so extension from phpredis https://github.com/nicolasff/phpredis
  */
 class Adapter {
     private $host;
