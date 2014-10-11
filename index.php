@@ -23,6 +23,10 @@ function dispatch(){
     $request = array_filter(explode("/", $_SERVER['REQUEST_URI']));
     $controllerReq = $request[1];
 
+    if (isset($request[1])){
+        $controllerReq = $request[1];
+    }
+
     if (in_array($controllerReq, array_keys($configs)) && $controllerReq == "api"){
         $version = $request[2];
         $action = $request[3];
