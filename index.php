@@ -2,7 +2,7 @@
 /*
  * Project setup
  */
-ini_set('display_errors', 1);
+
 $configs = parse_ini_file('Config/config.ini', true);
 DEFINE('CONTROLLERSPATH', 'Controllers/');
 DEFINE('MODELSPATH', 'Models/');
